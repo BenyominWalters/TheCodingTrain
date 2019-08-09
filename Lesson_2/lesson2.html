@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coding Train: Data/APIs Lesson 2</title>
+</head>
+<body>
+    <h1>Lesson Two</h1>
+
+    <script>
+
+    getData();
+
+    async function getData() {
+        const response = await fetch('nasa-temp-data.csv');
+        const data = await response.text();
+        // console.log(data);
+
+        const table = data.split('\n').slice(1);
+        table.forEach(row => {
+            const columns = row.split(',');
+            // console.log(row);
+            const year = columns[0];
+            const temp = columns[1];
+            console.log(year, temp);
+        });
+        // console.log(rows);
+    }
+    
+    </script>
+    
+</body>
+</html>
