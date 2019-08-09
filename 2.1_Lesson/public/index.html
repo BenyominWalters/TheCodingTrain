@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Data Selfie App</title>
+</head>
+<body>
+
+<script>
+    function getGeoLoc(){
+        if ("geolocation" in navigator) {
+            console.log('geolocation is available')
+
+            navigator.geolocation.getCurrentPosition(position => {
+                console.log(position);
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                document.getElementById('lat').textContent = lat.toFixed(2);
+                document.getElementById('lng').textContent = lng.toFixed(2);
+            });
+        } else {
+            console.log('geolocation is NOT available')
+        }
+    }
+ 
+</script>
+
+    <span>Home | <a href="./photos.html">Photos</a></span>
+    <h1>Data Selfie App</h1>
+    <h2>Your Geolocation</h2>
+    <button onclick="getGeoLoc()">Find My Geolocation!</button>
+    <p>Latitude: <span id="lat"></span>&deg;<br>
+        Longitude: <span id="lng"></span>&deg;<br>
+    </p>
+    
+</body>
+</html>
