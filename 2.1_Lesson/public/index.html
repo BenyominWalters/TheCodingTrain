@@ -13,14 +13,23 @@
         integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
         crossorigin=""></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"
+        integrity="sha256-WVsM3xrcqyuFNF3W1qtIKbHFsD0977nDQA8DCMp1zCw=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"
+        integrity="sha256-2/3R3NV5zryj0fDjD3cDh+SNiWQ/TJiMVZzAo5FrhiU=" crossorigin="anonymous"></script>
+
     <title>Data Selfie App</title>
 </head>
 <body>
 
-    <span>Home | <a href="./photos.html">Photos</a></span>
+    <p>Add Geolocation | <a href="./all.html">Locations List</a></p>
     <h1>Data Selfie App</h1>
     <h2>Your Geolocation</h2>
+
+    
+    <input type="text" name="name" id="nameInput" placeholder="Name" />
     <button onclick="getGeoLoc()">Find My Geolocation!</button>
+    
     <p>Latitude: <span id="lat"></span>&deg;<br>
         Longitude: <span id="lng"></span>&deg;<br>
     </p>
@@ -39,6 +48,13 @@
         // Making a marker
         const marker = L.marker([0, 0]).addTo(mymap);
 
+        function setup() {
+
+           background(255, 0, 0);
+        } // end of setup function
+
+         
+
         function getGeoLoc() {
             if ("geolocation" in navigator) {
                 console.log('geolocation is available')
@@ -47,12 +63,14 @@
                     console.log(position);
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
-                    
+
                     document.getElementById('lat').textContent = lat.toFixed(2);
                     document.getElementById('lng').textContent = lng.toFixed(2);
                     updateMap(lat, lng);
 
-                    const data = {lat, lng};
+                    const nameInput = document.getElementById('nameInput');
+                    let name = nameInput.value;
+                    const data = { name, lat, lng };
                     const options = {
                         method: 'POST',
                         body: JSON.stringify(data),
@@ -63,6 +81,7 @@
                     const response = await fetch('/api', options);
                     const json = await response.json();
                     console.log(json);
+                    nameInput.value == "";
                 });
             } else {
                 console.log('geolocation is NOT available')
@@ -75,6 +94,8 @@
             marker.setLatLng([lat, lng]);
 
         }
+
+        
 
 
     </script>
